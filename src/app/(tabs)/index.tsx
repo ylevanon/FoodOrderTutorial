@@ -1,16 +1,5 @@
-import { ScrollView } from 'react-native';
-import products from '@assets/data/products';
-import ProductListItem from '@components/ProductListItem';
+import { Redirect } from "expo-router";
 
-
-export default function MenuScreen() {
-  return <ScrollView>
-    <ProductListItem
-    product={products[0]}
-    />
-    <ProductListItem
-    product={products[1]}
-    />
-  </ScrollView>
-  
-};
+export default function TabIndex() {
+  return <Redirect href={"/menu/"} />;
+}
