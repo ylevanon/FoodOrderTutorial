@@ -1,27 +1,27 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import products from "@assets/data/products";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import { useState } from "react";
 import Button from "@/components/Button";
+import { useCart } from "@/providers/CartProvider";
+import { PizzaSize } from "@/app/types";
 
 export default function ProductDetailsScreen() {
   const { id } = useLocalSearchParams();
-  const [selectedSize, setSelectedSize] = useState<string | null>("M");
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
+  const { addItem } = useCart();
+  const router = useRouter();
 
   // want to render from string to some JSX elements
-  const sizes: string[] = ["S", "M", "L", "XL"];
+  const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
   const addToCart = () => {
     if (!product) return;
-    console.warn(
-      "Add to cart, size: ",
-      selectedSize,
-      "product: ",
-      product.name
-    );
+    addItem(product, selectedSize);
+    router.push("/cart");
   };
 
   const product = products.find((p) => p.id.toString() === id);
